@@ -1,0 +1,16 @@
+{
+    "name": "stechstudio/lambda-event-router",
+    "description": "Event Routing for AWS Lambda",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bubba",
+            "email": "rob@stechstudio.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.14"
+    }
+}
