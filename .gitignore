@@ -1,5 +1,6 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 .idea/
+.DS_Store
 
 # Covers vendored libraries
 vendor/
