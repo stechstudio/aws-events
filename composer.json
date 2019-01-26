@@ -1,16 +1,39 @@
 {
-    "name": "stechstudio/lambda-event-router",
-    "description": "Event Routing for AWS Lambda",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Bubba",
-            "email": "rob@stechstudio.com"
-        }
-    ],
-    "require": {},
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.14"
+  "name": "stechstudio/lambda-events",
+  "description": "Event Handling for AWS Lambda",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bubba",
+      "email": "rob@stechstudio.com"
     }
+  ],
+  "require": {
+    "php": "7.3.0",
+    "ext-json": "*",
+    "tightenco/collect": "^5.7"
+
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.14",
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "classmap": [
+    ],
+    "psr-4": {
+      "STS\\Lambda\\": "src"
+    },
+    "files": [
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "STS\\Fixer\\FixerServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable"
 }
