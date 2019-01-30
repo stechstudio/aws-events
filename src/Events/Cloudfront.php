@@ -2,10 +2,7 @@
 
 namespace STS\Lambda\Events;
 
-
-use STS\Lambda\Foundation\Event;
-
 class Cloudfront extends Event
 {
-
+    protected static $contains = 'Records.cf';
 }

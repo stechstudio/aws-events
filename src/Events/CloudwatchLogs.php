@@ -3,9 +3,12 @@
 namespace STS\Lambda\Events;
 
 
-use STS\Lambda\Foundation\Event;
-
 class CloudwatchLogs extends Event
 {
+    protected static $contains = 'awslogs';
 
+    public static function supports(Event $event)
+    {
+        return $event->has(self::$contains);
+    }
 }

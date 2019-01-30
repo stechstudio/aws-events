@@ -3,9 +3,12 @@
 namespace STS\Lambda\Events;
 
 
-use STS\Lambda\Foundation\Event;
-
 class ApiGatewayProxyRequest extends Event
 {
+    protected static $contains = 'requestContext';
 
+    public static function supports($event)
+    {
+        return $event->has(self::$contains);
+    }
 }

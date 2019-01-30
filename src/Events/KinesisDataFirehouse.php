@@ -3,9 +3,7 @@
 namespace STS\Lambda\Events;
 
 
-use STS\Lambda\Foundation\Event;
-
 class KinesisDataFirehouse extends Event
 {
-
+    protected static $contains = 'invocationId';
 }

@@ -3,9 +3,7 @@
 namespace STS\Lambda\Events;
 
 
-use STS\Lambda\Foundation\Event;
-
 class ScheduledEvent extends Event
 {
-
+    protected static $contains = 'detail-type';
 }

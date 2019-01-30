@@ -2,10 +2,8 @@
 
 namespace STS\Lambda\Events;
 
-
-use STS\Lambda\Foundation\Event;
-
 class IotButton extends Event
 {
+    protected static $contains = 'clickType';
 
 }
