@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use STS\Lambda\Foundation\Event;
+use STS\Lambda\Events\Event;
 
 final class GenericTest extends TestCase
 {
@@ -124,4 +124,42 @@ final class GenericTest extends TestCase
     {
         $this->assertInstanceOf(ArrayIterator::class, $event->getIterator());
     }
+
+    /**
+     * @dataProvider eventProvider
+     * @param string $eventClassName
+     * @param string $eventSample
+     * @throws JsonException
+     */
+    public function testEventFactory(string $eventClassName, string $eventSample)
+    {
+        $this->assertEquals('STS\Lambda\Events\\' . $eventClassName,
+            get_class(Event::fromFile($this->eventSamples . $eventSample)));
+    }
+
+    public function eventProvider()
+    {
+        return [
+            [Sqs::class, 'sqs.json'],
+            [Sns::class, 'sns.json'],
+            [CloudwatchLogs::class, 'cloudwatch-logs.json'],
+            [CognitoSync::class, 'cognito-sync.json'],
+            [Lex::class, 'lex.json'],
+            [ApiGatewayProxyRequest::class, 'api-gateway-proxy-request.json'],
+            [CloudformationCreateRequest::class, 'cloudformation-create-request.json'],
+            [Config::class, 'config.json'],
+            [IotButton::class, 'iot-button.json'],
+            [KinesisDataFirehouse::class, 'kinesis-data-firehose.json'],
+            [ScheduledEvent::class, 'scheduled-event.json'],
+            [Cloudfront::class, 'cloudfront.json'],
+            [S3Delete::class, 's3-delete.json'],
+            [S3Put::class, 's3-put.json'],
+            [DynamodbUpdate::class, 'dynamodb-update.json'],
+            [KinesisDataStreams::class, 'kinesis-data-streams.json'],
+            [SesEmailReceiving::class, 'ses-email-receiving.json'],
+
+
+        ];
+    }
+
 }
