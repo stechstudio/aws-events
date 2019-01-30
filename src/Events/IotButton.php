@@ -1,6 +1,6 @@
 <?php
 
-namespace STS\Lambda\Events;
+namespace STS\AwsEvents\Events;
 
 class IotButton extends Event
 {

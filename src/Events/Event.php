@@ -1,12 +1,12 @@
 <?php
 
-namespace STS\Lambda\Events;
+namespace STS\AwsEvents\Events;
 
 use IteratorAggregate;
-use STS\Lambda\Contracts\Arrayable;
-use STS\Lambda\Contracts\Collectable;
-use STS\Lambda\Contracts\Eventful;
-use STS\Lambda\Contracts\Jsonable;
+use STS\AwsEvents\Contracts\Arrayable;
+use STS\AwsEvents\Contracts\Collectable;
+use STS\AwsEvents\Contracts\Eventful;
+use STS\AwsEvents\Contracts\Jsonable;
 
 class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Countable, \JsonSerializable, Eventful
 {
@@ -34,6 +34,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         Sqs::class,
         Sns::class
     ];
+
     /**
      * @var string
      */
@@ -45,7 +46,9 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Event constructor.
+     *
      * @param string $rawEvent
+     *
      * @throws \JsonException
      */
     public function __construct(string $rawEvent)
@@ -56,7 +59,9 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Ensure everything that can be a collection, is.
+     *
      * @param array $array
+     *
      * @return \Tightenco\Collect\Support\Collection
      */
     protected function recursiveCollect(array $array): \Tightenco\Collect\Support\Collection
@@ -84,7 +89,9 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Generate an event from a file.
+     *
      * @param string $path
+     *
      * @return Event
      * @throws \JsonException
      */
@@ -95,7 +102,9 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Generate an event from a string.
+     *
      * @param string $event
+     *
      * @return Event
      * @throws \JsonException
      */
@@ -106,6 +115,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * @param $rawEvent
+     *
      * @return UnknownEvent
      * @throws \JsonException
      */
@@ -115,6 +125,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         foreach (self::$events as $eventClassName) {
             if ($eventClassName::supports($event)) {
                 $result = new $eventClassName($event);
+
                 return $result;
             }
         }
@@ -134,6 +145,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      * Determine if an item exists in the collection by key.
      *
      * @param  mixed $key
+     *
      * @return bool
      */
     public function has(string $keyName): bool
@@ -154,6 +166,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
                 return false;
             }
         }
+
         return true;
     }
 
@@ -162,6 +175,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      *
      * @param  mixed $key
      * @param  mixed $default
+     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -171,7 +185,9 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Proxy an attribute request in a collection->get($key);
+     *
      * @param $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -184,6 +200,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      *
      * @param  string $method
      * @param  array $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)
@@ -192,6 +209,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
             if (is_callable($parameters[0])) {
                 return $this->collection->{$method}($parameters[0]);
             }
+
             return $this->collection->{$method}($parameters);
         }
     }

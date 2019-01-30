@@ -1,6 +1,6 @@
 <?php
 
-namespace STS\Lambda\Contracts;
+namespace STS\AwsEvents\Contracts;
 
 interface Collectable
 {

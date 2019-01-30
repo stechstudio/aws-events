@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use STS\Lambda\Events\Event;
+use STS\AwsEvents\Events\Event;
 
 final class GenericTest extends TestCase
 {
@@ -133,7 +133,7 @@ final class GenericTest extends TestCase
      */
     public function testEventFactory(string $eventClassName, string $eventSample)
     {
-        $this->assertEquals('STS\Lambda\Events\\' . $eventClassName,
+        $this->assertEquals('STS\AwsEvents\Events\\' . $eventClassName,
             get_class(Event::fromFile($this->eventSamples . $eventSample)));
     }
 

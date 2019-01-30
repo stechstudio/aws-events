@@ -6,7 +6,7 @@
  * Time: 12:43
  */
 
-namespace STS\Lambda\Contracts;
+namespace STS\AwsEvents\Contracts;
 
 interface Eventful
 {
