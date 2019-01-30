@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "7.3.0",
+    "php": "^7.3",
     "ext-json": "*",
     "tightenco/collect": "^5.7"
   },
@@ -30,7 +30,7 @@
   "extra": {
     "laravel": {
       "providers": [
-
+        "STS\\AwsEvents\\Frameworks\\Laravel\\AwsEventsServiceProvider"
       ]
     }
   },

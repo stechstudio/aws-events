@@ -83,7 +83,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      */
     protected function decode(): array
     {
-
         return json_decode($this->rawEvent, $assoc = true, $depth = 512, JSON_THROW_ON_ERROR);
     }
 
