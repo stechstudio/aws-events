@@ -23,7 +23,7 @@
       },
       "awsRegion": "us-west-2",
       "eventName": "INSERT",
-      "eventSourceARN": eventsourcearn,
+      "eventSourceARN": "arn:partition:service:region:account-id:resourcetype:resource:qualifier",
       "eventSource": "aws:dynamodb"
     },
     {
@@ -57,7 +57,7 @@
       },
       "awsRegion": "us-west-2",
       "eventName": "MODIFY",
-      "eventSourceARN": sourcearn,
+      "eventSourceARN": "arn:partition:service:region:account-id:resourcetype:resource:qualifier",
       "eventSource": "aws:dynamodb"
     },
     {
