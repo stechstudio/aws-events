@@ -39,6 +39,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      * @var string
      */
     protected $rawEvent;
+
     /**
      * @var \Tightenco\Collect\Support\Collection
      */
@@ -121,9 +122,10 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     public static function make($rawEvent): Event
     {
         $event = new Event($rawEvent);
+
         foreach (self::$events as $eventClassName) {
             if ($eventClassName::supports($event)) {
-                $result = new $eventClassName($event);
+                $result = new $eventClassName($rawEvent);
 
                 return $result;
             }
