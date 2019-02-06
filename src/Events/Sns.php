@@ -12,24 +12,20 @@ class Sns extends Event
      */
     public function getContainedEvent(): ?Event
     {
-        if ($this->containsEvent()) {
-            return $this->containedEvent;
-        }
-        return null;
+        return $this->containedEvent;
     }
 
     /**
-     * @param String $rawEvent
      * @return bool
      */
-    public function containsEvent(String $rawEvent): bool
+    public function containsEvent(): bool
     {
         if (!is_null($this->containedEvent)) {
             return true;
         }
-        $event = null;
+
         try {
-            $event = Event::make($rawEvent);
+            $event = Event::make($this->Records->first()->Sns->Message);
         } catch (\JsonException $e) {
             return false;
         }
@@ -38,6 +34,7 @@ class Sns extends Event
             $this->containedEvent = $event;
             return true;
         }
+
         return false;
     }
 

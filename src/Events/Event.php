@@ -7,6 +7,7 @@ use STS\AwsEvents\Contracts\Arrayable;
 use STS\AwsEvents\Contracts\Collectable;
 use STS\AwsEvents\Contracts\Eventful;
 use STS\AwsEvents\Contracts\Jsonable;
+use Symfony\Component\Process\Process;
 
 class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Countable, \JsonSerializable, Eventful
 {
@@ -39,6 +40,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      * @var string
      */
     protected $rawEvent;
+
     /**
      * @var \Tightenco\Collect\Support\Collection
      */
@@ -54,6 +56,23 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     {
         $this->rawEvent = $rawEvent;
         $this->collection = $this->recursiveCollect($this->decode());
+    }
+
+    /**
+     * Register a custom event type
+     *
+     * @param string $eventClass
+     *
+     * @throws \DomainException
+     * @throws \ReflectionException
+     */
+    public static function register(string $eventClass)
+    {
+        if (!(new \ReflectionClass($eventClass))->isSubclassOf(Event::class)) {
+            throw new \DomainException("Only subclasses of " . Event::class . " may be registered");
+        }
+
+        self::$events[] = $eventClass;
     }
 
     /**
@@ -119,9 +138,10 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     public static function make($rawEvent): Event
     {
         $event = new Event($rawEvent);
+
         foreach (self::$events as $eventClassName) {
             if ($eventClassName::supports($event)) {
-                $result = new $eventClassName($event);
+                $result = new $eventClassName($rawEvent);
 
                 return $result;
             }

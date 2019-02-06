@@ -13,7 +13,7 @@ class AwsEventsServiceProvider extends ServiceProvider
         $this->app['router']->post('_sns', function(Request $request) {
             $this->app['events']->dispatch($event = Event::make($request->getContent()));
 
-            if($event instanceof Sns && $event->hasContainedEvent()) {
+            if($event instanceof Sns && $event->containsEvent()) {
                 $this->app['events']->dispatch($event->getContainedEvent());
             }
         });
