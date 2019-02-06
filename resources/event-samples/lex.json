@@ -15,9 +15,9 @@
   "currentIntent": {
     "name": "intent-name",
     "slots": {
-      "slot-name": "value",
-      "slot-name": "value",
-      "slot-name": "value"
+      "slot-name-1": "value",
+      "slot-name-2": "value",
+      "slot-name-3": "value"
     },
     "confirmationStatus": "None, Confirmed, or Denied (intent confirmation, if configured)"
   }
