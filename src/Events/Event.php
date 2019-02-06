@@ -49,7 +49,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      *
      * @param string $rawEvent
      *
-     * @throws \JsonException
      */
     public function __construct(string $rawEvent)
     {
@@ -78,7 +77,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Decodes the raw event into an associative array
-     * @throws \JsonException
      * @return array
      */
     protected function decode(): array
@@ -115,7 +113,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * @param $rawEvent
      *
-     * @return UnknownEvent
+     * @return Event
      * @throws \JsonException
      */
     public static function make($rawEvent): Event
@@ -143,7 +141,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Determine if an item exists in the collection by key.
      *
-     * @param  mixed $key
+     * @param string $keyName
      *
      * @return bool
      */
@@ -211,6 +209,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
             return $this->collection->{$method}($parameters);
         }
+        return null;
     }
 
     /**

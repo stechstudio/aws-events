@@ -157,8 +157,6 @@ final class GenericTest extends TestCase
             [DynamodbUpdate::class, 'dynamodb-update.json'],
             [KinesisDataStreams::class, 'kinesis-data-streams.json'],
             [SesEmailReceiving::class, 'ses-email-receiving.json'],
-
-
         ];
     }
 
