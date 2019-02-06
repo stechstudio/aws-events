@@ -2,3 +2,4 @@
 .idea/
 # Covers vendored libraries
 vendor/
+.phpcs-cache
