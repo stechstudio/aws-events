@@ -1,26 +1,27 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace STS\AwsEvents\Events;
 
+/**
+ * Class Sns
+ *
+ * @mixin Event
+ */
 class Sns extends Event
 {
+    /** @var string */
     protected static $contains = 'Records.Sns';
-    protected $containedEvent = null;
+    /** @var Event */
+    protected $containedEvent;
 
-    /**
-     * @return Event|null
-     */
     public function getContainedEvent(): ?Event
     {
         return $this->containedEvent;
     }
 
-    /**
-     * @return bool
-     */
     public function containsEvent(): bool
     {
-        if (!is_null($this->containedEvent)) {
+        if (! empty($this->containedEvent)) {
             return true;
         }
 
@@ -37,5 +38,4 @@ class Sns extends Event
 
         return false;
     }
-
 }

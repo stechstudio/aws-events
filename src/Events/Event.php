@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace STS\AwsEvents\Events;
 
@@ -7,10 +7,18 @@ use STS\AwsEvents\Contracts\Arrayable;
 use STS\AwsEvents\Contracts\Collectable;
 use STS\AwsEvents\Contracts\Eventful;
 use STS\AwsEvents\Contracts\Jsonable;
-use Symfony\Component\Process\Process;
+use Tightenco\Collect\Support\Collection;
 
+/**
+ * Class Event
+ *
+ * @property Collection $Records
+ */
 class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Countable, \JsonSerializable, Eventful
 {
+    /** @var string */
+    protected static $contains = 'baseEvent';
+
     /**
      * Default event types.
      * Order of the array matters.
@@ -34,24 +42,15 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         KinesisDataStreams::class,
         SesEmailReceiving::class,
         Sqs::class,
-        Sns::class
+        Sns::class,
     ];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $rawEvent;
 
-    /**
-     * @var \Tightenco\Collect\Support\Collection
-     */
+    /** @var Collection */
     protected $collection;
 
-    /**
-     * Event constructor.
-     *
-     * @param string $rawEvent
-     */
     public function __construct(string $rawEvent)
     {
         $this->rawEvent = $rawEvent;
@@ -59,30 +58,11 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     }
 
     /**
-     * Register a custom event type
-     *
-     * @param string $eventClass
-     *
-     * @throws \DomainException
-     * @throws \ReflectionException
-     */
-    public static function register(string $eventClass)
-    {
-        if (!(new \ReflectionClass($eventClass))->isSubclassOf(Event::class)) {
-            throw new \DomainException("Only subclasses of " . Event::class . " may be registered");
-        }
-
-        self::$events[] = $eventClass;
-    }
-
-    /**
      * Ensure everything that can be a collection, is.
      *
      * @param array $array
-     *
-     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function recursiveCollect(array $array): \Tightenco\Collect\Support\Collection
+    protected function recursiveCollect(array $array): Collection
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -91,7 +71,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
             }
         }
 
-        return collect($array);
+        return new Collection($array);
     }
 
     /**
@@ -105,9 +85,22 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     }
 
     /**
-     * Generate an event from a file.
+     * Register a custom event type
      *
-     * @param string $path
+     * @throws \DomainException
+     * @throws \ReflectionException
+     */
+    public static function register(string $eventClass): void
+    {
+        if (! (new \ReflectionClass($eventClass))->isSubclassOf(self::class)) {
+            throw new \DomainException('Only subclasses of ' . self::class . ' may be registered');
+        }
+
+        self::$events[] = $eventClass;
+    }
+
+    /**
+     * Generate an event from a file.
      *
      * @return Event
      * @throws \JsonException
@@ -120,8 +113,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Generate an event from a string.
      *
-     * @param string $event
-     *
      * @return Event
      * @throws \JsonException
      */
@@ -130,21 +121,13 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         return self::make($event);
     }
 
-    /**
-     * @param $rawEvent
-     *
-     * @return Event
-     * @throws \JsonException
-     */
-    public static function make($rawEvent): Event
+    public static function make(string $rawEvent): Event
     {
         $event = new Event($rawEvent);
 
         foreach (self::$events as $eventClassName) {
             if ($eventClassName::supports($event)) {
-                $result = new $eventClassName($rawEvent);
-
-                return $result;
+                return new $eventClassName($rawEvent);
             }
         }
 
@@ -154,17 +137,13 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         return $event;
     }
 
-    public static function supports(Event $event)
+    public static function supports(Event $event): bool
     {
         return $event->has(static::$contains);
     }
 
     /**
      * Determine if an item exists in the collection by key.
-     *
-     * @param string $keyName
-     *
-     * @return bool
      */
     public function has(string $keyName): bool
     {
@@ -173,7 +152,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         $test = $this->collection;
 
         foreach ($keys as $key) {
-            if ($key == 'Records') {
+            if ($key === 'Records') {
                 $test = $test->get('Records')->first();
                 continue;
             }
@@ -193,7 +172,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      *
      * @param mixed $key
      * @param mixed $default
-     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -204,11 +182,9 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Proxy an attribute request in a collection->get($key);
      *
-     * @param $name
-     *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->collection->get($name);
     }
@@ -216,12 +192,10 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Proxy a method call onto the collection.
      *
-     * @param string $method
-     * @param array  $parameters
-     *
+     * @param array $parameters
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         if (method_exists($this->collection, $method)) {
             if (is_callable($parameters[0])) {
@@ -236,15 +210,13 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * @inheritDoc
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->decode();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function toCollection($options = 0)
+
+    public function toCollection(int $options = 0): Collection
     {
         return $this->collection;
     }
@@ -260,7 +232,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * @inheritDoc
      */
-    public function toJson($options = 0)
+    public function toJson(int $options = 0): string
     {
         return $this->rawEvent;
     }

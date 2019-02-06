@@ -1,12 +1,14 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
- * Created by PhpStorm.
  * User: bubba
  * Date: 2019-01-25
  * Time: 12:43
  */
 
 namespace STS\AwsEvents\Contracts;
+
+use Tightenco\Collect\Support\Collection;
 
 interface Eventful
 {
@@ -18,7 +20,7 @@ interface Eventful
     /**
      * @inheritDoc
      */
-    public function toCollection($options = 0);
+    public function toCollection(int $options = 0): Collection;
 
     /**
      * @inheritDoc
@@ -28,7 +30,7 @@ interface Eventful
     /**
      * @inheritDoc
      */
-    public function toJson($options = 0);
+    public function toJson(int $options = 0): string;
 
     /**
      * @inheritDoc
