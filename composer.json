@@ -18,7 +18,8 @@
     "friendsofphp/php-cs-fixer": "^2.14",
     "phpunit/phpunit": "^7",
     "illuminate/support": "^5.7",
-    "illuminate/http": "^5.7"
+    "illuminate/http": "^5.7",
+    "phpstan/phpstan": "^0.11.1"
   },
   "autoload": {
     "classmap": [
