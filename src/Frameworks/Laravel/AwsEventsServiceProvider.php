@@ -10,13 +10,15 @@ class AwsEventsServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app['router']->post('_sns', function(Request $request) {
-            $this->app['events']->dispatch($event = Event::make($request->getContent()));
+        $this->app['router']->post(
+            '_sns', function (Request $request) {
+                $this->app['events']->dispatch($event = Event::make($request->getContent()));
 
-            if($event instanceof Sns && $event->containsEvent()) {
-                $this->app['events']->dispatch($event->getContainedEvent());
+                if($event instanceof Sns && $event->containsEvent()) {
+                    $this->app['events']->dispatch($event->getContainedEvent());
+                }
             }
-        });
+        );
     }
 
     public function boot()

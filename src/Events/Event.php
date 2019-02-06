@@ -14,6 +14,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Default event types.
      * Order of the array matters.
+     *
      * @var array
      */
     protected static $events = [
@@ -50,7 +51,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      * Event constructor.
      *
      * @param string $rawEvent
-     *
      */
     public function __construct(string $rawEvent)
     {
@@ -96,6 +96,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
 
     /**
      * Decodes the raw event into an associative array
+     *
      * @return array
      */
     protected function decode(): array
@@ -190,8 +191,8 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Get an item from the event by key.
      *
-     * @param  mixed $key
-     * @param  mixed $default
+     * @param mixed $key
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -215,8 +216,8 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
     /**
      * Proxy a method call onto the collection.
      *
-     * @param  string $method
-     * @param  array $parameters
+     * @param string $method
+     * @param array  $parameters
      *
      * @return mixed
      */
