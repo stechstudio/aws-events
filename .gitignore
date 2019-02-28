@@ -3,3 +3,4 @@
 # Covers vendored libraries
 vendor/
 .phpcs-cache
+.DS_Store

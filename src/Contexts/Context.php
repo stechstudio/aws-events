@@ -2,6 +2,10 @@
 
 namespace STS\AwsEvents\Contexts;
 
+use Illuminate\Support\Collection;
+use function json_decode;
+use function strtolower;
+
 class Context
 {
     /**
@@ -76,7 +80,6 @@ class Context
      * @var int
      */
     protected $runtimeDeadlineMs = 0;
-
     /**
      * The AWS X-Ray tracing header.
      * For example, Root=1-5bef4de7-ad49b0e87f6ef6c87fc2e700;Parent=9a9197af755a6419;Sampled=1
@@ -84,6 +87,63 @@ class Context
      * @var string
      */
     protected $xRayTraceId = '';
+
+    public static function fromJson(string $jsonContext): Context
+    {
+        $contextCollection = new Collection(json_decode($jsonContext, true));
+        $context = new static;
+
+        $context->setFunctionName(env('AWS_LAMBDA_FUNCTION_NAME'));
+        $context->setFunctionVersion(env('AWS_LAMBDA_FUNCTION_VERSION'));
+        $context->setLogGroupName(env('AWS_LAMBDA_LOG_GROUP_NAME'));
+        $context->setLogStreamName(env('AWS_LAMBDA_LOG_STREAM_NAME'));
+
+        $context->setMemoryLimitInMb($contextCollection->get(strtolower('')));
+        $context->setInvokedFunctionArn($contextCollection->get(strtolower('Lambda-Runtime-Invoked-Function-Arn')));
+        $context->setAwsRequestId($contextCollection->get('lambda-runtime-aws-request-id'));
+        $context->setRuntimeDeadlineMs($contextCollection->get(strtolower('Lambda-Runtime-Deadline-Ms')));
+        $context->setXRayTraceId($contextCollection->get(strtolower('Lambda-Runtime-Trace-Id')));
+
+        return $context;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRuntimeDeadlineMs(): int
+    {
+        return $this->runtimeDeadlineMs;
+    }
+
+    /**
+     * @param int $runtimeDeadlineMs
+     *
+     * @return Context
+     */
+    public function setRuntimeDeadlineMs(int $runtimeDeadlineMs): Context
+    {
+        $this->runtimeDeadlineMs = $runtimeDeadlineMs;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getXRayTraceId(): string
+    {
+        return $this->xRayTraceId;
+    }
+
+    /**
+     * @param string $xRayTraceId
+     *
+     * @return Context
+     */
+    public function setXRayTraceId(string $xRayTraceId): Context
+    {
+        $this->xRayTraceId = $xRayTraceId;
+        return $this;
+    }
 
     /**
      * Determine how much more time the function has to run
