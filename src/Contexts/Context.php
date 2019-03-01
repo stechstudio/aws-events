@@ -107,51 +107,19 @@ class Context
         return $context;
     }
 
-    /**
-     * @return int
-     */
-    public function getRuntimeDeadlineMs(): int
+    public function toArray(): array
     {
-        return $this->runtimeDeadlineMs;
-    }
-
-    /**
-     * @param int $runtimeDeadlineMs
-     *
-     * @return Context
-     */
-    public function setRuntimeDeadlineMs(int $runtimeDeadlineMs): Context
-    {
-        $this->runtimeDeadlineMs = $runtimeDeadlineMs;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getXRayTraceId(): string
-    {
-        return $this->xRayTraceId;
-    }
-
-    /**
-     * @param string $xRayTraceId
-     *
-     * @return Context
-     */
-    public function setXRayTraceId(string $xRayTraceId): Context
-    {
-        $this->xRayTraceId = $xRayTraceId;
-        return $this;
-    }
-
-    /**
-     * Determine how much more time the function has to run
-     * before being forcibly shut down due to timeout.
-     */
-    public function getTimeRemaining(): int
-    {
-        return $this->runtimeDeadlineMs - time();
+        return [
+            'name' => $this->getFunctionName(),
+            'version' => $this->getFunctionVersion(),
+            'log_group_name' => $this->getLogGroupName(),
+            'log_stream_name' => $this->getLogStreamName(),
+            'memory_limit_in_mb' => $this->getMemoryLimitInMb(),
+            'invoked_function_arn' => $this->getInvokedFunctionArn(),
+            'aws_request_id' => $this->getAwsRequestId(),
+            'runtime_deadline_in_ms' => $this->getRuntimeDeadlineMs(),
+            'xray_trace_id' => $this->getXRayTraceId(),
+        ];
     }
 
     public function getFunctionName(): string
@@ -176,39 +144,6 @@ class Context
         return $this;
     }
 
-    public function getInvokedFunctionArn(): string
-    {
-        return $this->invokedFunctionArn;
-    }
-
-    public function setInvokedFunctionArn(string $invokedFunctionArn): Context
-    {
-        $this->invokedFunctionArn = $invokedFunctionArn;
-        return $this;
-    }
-
-    public function getMemoryLimitInMb(): string
-    {
-        return $this->memoryLimitInMb;
-    }
-
-    public function setMemoryLimitInMb(string $memoryLimitInMb): Context
-    {
-        $this->memoryLimitInMb = $memoryLimitInMb;
-        return $this;
-    }
-
-    public function getAwsRequestId(): string
-    {
-        return $this->awsRequestId;
-    }
-
-    public function setAwsRequestId(string $awsRequestId): Context
-    {
-        $this->awsRequestId = $awsRequestId;
-        return $this;
-    }
-
     public function getLogGroupName(): string
     {
         return $this->logGroupName;
@@ -229,6 +164,70 @@ class Context
     {
         $this->logStreamName = $logStreamName;
         return $this;
+    }
+
+    public function getMemoryLimitInMb(): string
+    {
+        return $this->memoryLimitInMb;
+    }
+
+    public function setMemoryLimitInMb(string $memoryLimitInMb): Context
+    {
+        $this->memoryLimitInMb = $memoryLimitInMb;
+        return $this;
+    }
+
+    public function getInvokedFunctionArn(): string
+    {
+        return $this->invokedFunctionArn;
+    }
+
+    public function setInvokedFunctionArn(string $invokedFunctionArn): Context
+    {
+        $this->invokedFunctionArn = $invokedFunctionArn;
+        return $this;
+    }
+
+    public function getAwsRequestId(): string
+    {
+        return $this->awsRequestId;
+    }
+
+    public function setAwsRequestId(string $awsRequestId): Context
+    {
+        $this->awsRequestId = $awsRequestId;
+        return $this;
+    }
+
+    public function getRuntimeDeadlineMs(): int
+    {
+        return $this->runtimeDeadlineMs;
+    }
+
+    public function setRuntimeDeadlineMs(int $runtimeDeadlineMs): Context
+    {
+        $this->runtimeDeadlineMs = $runtimeDeadlineMs;
+        return $this;
+    }
+
+    public function getXRayTraceId(): string
+    {
+        return $this->xRayTraceId;
+    }
+
+    public function setXRayTraceId(string $xRayTraceId): Context
+    {
+        $this->xRayTraceId = $xRayTraceId;
+        return $this;
+    }
+
+    /**
+     * Determine how much more time the function has to run
+     * before being forcibly shut down due to timeout.
+     */
+    public function getTimeRemaining(): int
+    {
+        return $this->runtimeDeadlineMs - time();
     }
 
     public function getIdentity(): Identity
