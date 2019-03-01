@@ -152,11 +152,15 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         $test = $this->collection;
 
         foreach ($keys as $key) {
-            if ($key === 'Records') {
-                $test = $test->get('Records')->first();
-                continue;
-            }
             if ($test->has($key)) {
+                if ($key === 'Records') {
+                    try {
+                        $test = $test->get('Records')->first();
+                        continue;
+                    } catch (\Throwable $t) {
+                        return false;
+                    }
+                }
                 $test = $test->get($key);
                 continue;
             } else {
@@ -172,6 +176,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      *
      * @param mixed $key
      * @param mixed $default
+     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -193,6 +198,7 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
      * Proxy a method call onto the collection.
      *
      * @param array $parameters
+     *
      * @return mixed
      */
     public function __call(string $method, array $parameters)
