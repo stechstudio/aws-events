@@ -1,6 +1,7 @@
 # Sample Events Published by Event Sources
-<details><summary>AWS CloudFormation Create Request Sample Event</summary>
-<p>
+<details>
+  <summary>AWS CloudFormation Create Request Sample Event</summary>
+
 ```json
 {
   "StackId": "arn:aws:cloudformation:us-west-2:EXAMPLE/stack-name/guid",
@@ -19,11 +20,10 @@
   "LogicalResourceId": "MyTestResource"
 }
 ```
-</p>
 </details>
 
 <details><summary>Amazon SES Email Receiving Sample Event</summary>
-<p>
+
 ```json
 {
   "Records": [
@@ -123,11 +123,11 @@
   ]
 }
 ```
-</p>
+
 </details>
 
 <details><summary>Scheduled Event Sample Event</summary>
-<p>
+
 ```json
 {
   "account": "123456789012",
@@ -142,11 +142,11 @@
   ]
 }
 ```
-</p>
+
 </details>
 
 <details><summary>Amazon CloudWatch Logs Sample Event</summary>
-<p>
+
 ```json
 {
  "awslogs": {
@@ -154,11 +154,11 @@
  }
  }
  ```
-</p>
+
 </details>
 
 <details><summary>Amazon SNS Sample Event</summary>
-<p>
+
 ```json
 {
   "Records": [
@@ -192,11 +192,11 @@
   ]
 }
 ```
-</p>
+
 </details>
 
 <details><summary>Amazon DynamoDB Update Sample Event</summary>
-<p>
+
 ```json
 {
   "Records": [
@@ -289,11 +289,11 @@
   ]
 }
 ```
-</p>
+
 </details>
 
 <details><summary>Amazon Cognito Sync Trigger Sample Event</summary>
-<p>
+
 ```json
    {
   "datasetName": "datasetName",
@@ -316,11 +316,11 @@
   "version": 2
 }  
 ```
-</p>
+
 </details>
 
 <details><summary>Amazon Kinesis Data Streams Sample Event</summary>
-<p>
+
 ```json
 {
   "Records": [
@@ -342,11 +342,11 @@
   ]
 }
 ```
-</p>
+
 </details>
 
 <details><summary>Amazon S3 Put Sample Event</summary>
-<p>
+
 ```json
 {
   "Records": [
@@ -388,11 +388,10 @@
 }
 ```
 
-</p>
 </details>
 
 <details><summary>Amazon S3 Delete Sample Event</summary>
-<p>
+
 ```json
   {
   "Records": [
@@ -432,11 +431,10 @@
 } 
 ```
 
-</p>
 </details>
 
 <details><summary>Amazon Lex Sample Event</summary>
-<p>
+
 ```json
 {
   "messageVersion": "1.0",
@@ -464,11 +462,11 @@
   }
 }
 ```
-</p>
+
 </details>
 
 <details><summary>API Gateway Proxy Request Event</summary>
-<p>
+
 ```json
 {
   "path": "/test/hello",
@@ -526,11 +524,11 @@
   }
 }
 ```
-</p>
+
 </details>
 
 <details><summary>Amazon SQS Event</summary>
-<p>
+
 ```json
 {
      "Records": [
@@ -553,11 +551,11 @@
     ]
 }
 ```
-</p>
+
 </details>
 
 <details><summary>API Gateway Proxy Response Event</summary>
-<p>
+
 ```json
 {
   "statusCode": 200,
@@ -583,11 +581,11 @@
   "body": "Hello World"
 }
   ```
-</p>
+
 </details>
 
 <details><summary>CloudFront Event</summary>
-<p>
+
 ```json
 {
   "Records": [
@@ -620,11 +618,11 @@
   ]
 }
  ```
-</p>
+
 </details>
 
 <details><summary>AWS Config Event</summary>
-<p>
+
 ```json
 { 
     "invokingEvent": "{\"configurationItem\":{\"configurationItemCaptureTime\":\"2016-02-17T01:36:34.043Z\",\"awsAccountId\":\"000000000000\",\"configurationItemStatus\":\"OK\",\"resourceId\":\"i-00000000\",\"ARN\":\"arn:aws:ec2:us-east-1:000000000000:instance/i-00000000\",\"awsRegion\":\"us-east-1\",\"availabilityZone\":\"us-east-1a\",\"resourceType\":\"AWS::EC2::Instance\",\"tags\":{\"Foo\":\"Bar\"},\"relationships\":[{\"resourceId\":\"eipalloc-00000000\",\"resourceType\":\"AWS::EC2::EIP\",\"name\":\"Is attached to ElasticIp\"}],\"configuration\":{\"foo\":\"bar\"}},\"messageType\":\"ConfigurationItemChangeNotification\"}",
@@ -639,11 +637,11 @@
     "version": "1.0"
 }
 ```
-</p>
+
 </details>
 
 <details><summary>AWS IoT Button Event</summary>
-<p>
+
 ```json
 {
   "serialNumber": "ABCDEFG12345",
@@ -652,11 +650,10 @@
 }
 ```
 
-</p>
 </details>
 
 <details><summary>Kinesis Data Firehose Event</summary>
-<p>
+
 ```json
 {
   "invocationId": "invoked123",
@@ -690,5 +687,5 @@
   ]
 }  
 ```
-</p>
+
 </details>
