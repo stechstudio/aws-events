@@ -137,12 +137,6 @@ class Event implements Arrayable, Collectable, Jsonable, IteratorAggregate, \Cou
         return $event;
     }
 
-    /**
-     * Generate an event from json.
-     *
-     * @return Event
-     * @throws \JsonException
-     */
     public static function fromJson(string $event): self
     {
         return self::make($event);
