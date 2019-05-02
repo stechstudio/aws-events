@@ -204,6 +204,7 @@ class Context
         return $this->runtimeDeadlineMs;
     }
 
+    /** Milliseconds since EPOCH */
     public function setRuntimeDeadlineMs(int $runtimeDeadlineMs): Context
     {
         $this->runtimeDeadlineMs = $runtimeDeadlineMs;
@@ -222,12 +223,19 @@ class Context
     }
 
     /**
-     * Determine how much more time the function has to run
+     * Determine how much more time, in milliseconds, the function has to run
      * before being forcibly shut down due to timeout.
      */
     public function getTimeRemaining(): int
     {
-        return $this->runtimeDeadlineMs - time();
+        return $this->runtimeDeadlineMs - $this->nowInMilliseconds();
+    }
+
+    /** Returns a millisecond representation of now() */
+    protected function nowInMilliseconds(): int
+    {
+        $mt = explode(' ', microtime());
+        return ((int) $mt[1]) * 1000 + ((int) round($mt[0] * 1000));
     }
 
     public function getIdentity(): Identity
