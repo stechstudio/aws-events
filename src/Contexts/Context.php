@@ -223,6 +223,15 @@ class Context
     }
 
     /**
+     * Determine how much more time, in seconds, the function has to run
+     * before being forcibly shut down due to timeout.
+     */
+    public function secondsRemaining(): int
+    {
+        return $this->getTimeRemaining() / 1000;
+    }
+
+    /**
      * Determine how much more time, in milliseconds, the function has to run
      * before being forcibly shut down due to timeout.
      */
@@ -235,7 +244,25 @@ class Context
     protected function nowInMilliseconds(): int
     {
         $mt = explode(' ', microtime());
-        return ((int) $mt[1]) * 1000 + ((int) round($mt[0] * 1000));
+        return ((int) $mt[1]) * 1000 + ((int) round((int) $mt[0] * 1000));
+    }
+
+    /**
+     * Determine how much more time, in milliseconds, the function has to run
+     * before being forcibly shut down due to timeout.
+     */
+    public function minutesRemaining(): int
+    {
+        return $this->getTimeRemaining() / 1000;
+    }
+
+    /**
+     * Determine how much more time, in milliseconds, the function has to run
+     * before being forcibly shut down due to timeout.
+     */
+    public function millisecondsRemaining(): int
+    {
+        return $this->getTimeRemaining();
     }
 
     public function getIdentity(): Identity
