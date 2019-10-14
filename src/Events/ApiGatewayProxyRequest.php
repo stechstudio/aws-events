@@ -5,7 +5,7 @@ namespace STS\AwsEvents\Events;
 class ApiGatewayProxyRequest extends Event
 {
     /** @var string */
-    protected static $contains = 'requestContext';
+    protected static $contains = 'requestContext.apiId';
 
     public static function supports(Event $event): bool
     {
