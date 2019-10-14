@@ -2,10 +2,10 @@
 
 namespace STS\AwsEvents\Events;
 
-class ApiGatewayProxyRequest extends Event
+class ApplicationLoadBalancer
 {
     /** @var string */
-    protected static $contains = 'requestContext.apiId';
+    protected static $contains = 'requestContext.elb';
 
     public static function supports(Event $event): bool
     {

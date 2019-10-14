@@ -16,13 +16,16 @@ final class GenericTest extends TestCase
 
     public function setUp()
     {
-        $this->eventSamples = dirname(__FILE__) . "/../../resources/event-samples/";
+        $this->eventSamples = dirname(__FILE__)
+            ."/../../resources/samples/events/";
     }
 
     public function testCanBeCreatedFromApiGatewayProxyRequest(): Event
     {
-        $event = Event::fromFile($this->eventSamples . 'api-gateway-proxy-request.json');
+        $event = Event::fromFile($this->eventSamples
+            .'api-gateway-proxy-request.json');
         $this->assertInstanceOf(Event::class, $event);
+
         return $event;
     }
 
@@ -33,7 +36,8 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testCanGetAnEventItemByKey(Event $event): void
@@ -42,7 +46,8 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testCanGetAnEventItemByAttribute(Event $event): void
@@ -51,7 +56,8 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testCanProxyIntoTheCollection(Event $event): void
@@ -62,7 +68,8 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testTransformationToArray(Event $event): void
@@ -71,16 +78,19 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testTransformationToCollection(Event $event): void
     {
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $event->toCollection());
+        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class,
+            $event->toCollection());
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testCounting(Event $event): void
@@ -89,7 +99,8 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testConversionToJson(Event $event): void
@@ -99,16 +110,18 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testCastingToString(Event $event): void
     {
-        $this->assertTrue(is_string((string)$event));
+        $this->assertTrue(is_string((string) $event));
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testJsonSerialization(Event $event): void
@@ -117,7 +130,8 @@ final class GenericTest extends TestCase
     }
 
     /**
-     * @param Event $event
+     * @param  Event  $event
+     *
      * @depends testCanBeCreatedFromApiGatewayProxyRequest
      */
     public function testIteratorWorks(Event $event): void
@@ -127,14 +141,18 @@ final class GenericTest extends TestCase
 
     /**
      * @dataProvider eventProvider
-     * @param string $eventClassName
-     * @param string $eventSample
+     *
+     * @param  string  $eventClassName
+     * @param  string  $eventSample
+     *
      * @throws JsonException
      */
-    public function testEventFactory(string $eventClassName, string $eventSample)
-    {
-        $this->assertEquals('STS\AwsEvents\Events\\' . $eventClassName,
-            get_class(Event::fromFile($this->eventSamples . $eventSample)));
+    public function testEventFactory(
+        string $eventClassName,
+        string $eventSample
+    ) {
+        $this->assertEquals('STS\AwsEvents\Events\\'.$eventClassName,
+            get_class(Event::fromFile($this->eventSamples.$eventSample)));
     }
 
     public function eventProvider()
@@ -146,7 +164,10 @@ final class GenericTest extends TestCase
             [CognitoSync::class, 'cognito-sync.json'],
             [Lex::class, 'lex.json'],
             [ApiGatewayProxyRequest::class, 'api-gateway-proxy-request.json'],
-            [CloudformationCreateRequest::class, 'cloudformation-create-request.json'],
+            [
+                CloudformationCreateRequest::class,
+                'cloudformation-create-request.json'
+            ],
             [Config::class, 'config.json'],
             [IotButton::class, 'iot-button.json'],
             [KinesisDataFirehouse::class, 'kinesis-data-firehose.json'],

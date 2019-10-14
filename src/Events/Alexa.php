@@ -2,10 +2,10 @@
 
 namespace STS\AwsEvents\Events;
 
-class ApiGatewayProxyRequest extends Event
+class Alexa extends Event
 {
     /** @var string */
-    protected static $contains = 'requestContext.apiId';
+    protected static $contains = 'payload.applianceId';
 
     public static function supports(Event $event): bool
     {

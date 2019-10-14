@@ -716,3 +716,120 @@ function lambda(string $event, string $context): array
 ```
 
 </details>
+
+
+<details><summary>ALB Request</summary>
+
+```json
+{
+  "requestContext": {
+    "elb": {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/lambda-279XGJDqGZ5rsrHC2Fjr/49e9d65c45c6791a"
+    }
+  },
+  "httpMethod": "GET",
+  "path": "/lambda",
+  "queryStringParameters": {
+    "query": "1234ABCD"
+  },
+  "headers": {
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+    "accept-encoding": "gzip",
+    "accept-language": "en-US,en;q=0.9",
+    "connection": "keep-alive",
+    "host": "lambda-alb-123578498.us-east-2.elb.amazonaws.com",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+    "x-amzn-trace-id": "Root=1-5c536348-3d683b8b04734faae651f476",
+    "x-forwarded-for": "72.12.164.125",
+    "x-forwarded-port": "80",
+    "x-forwarded-proto": "http",
+    "x-imforwards": "20"
+  },
+  "body": "",
+  "isBase64Encoded": false
+}
+```
+
+</details>
+
+<details><summary>Alexa</summary>
+
+```json
+{
+  "header": {
+    "payloadVersion": "1",
+    "namespace": "Control",
+    "name": "SwitchOnOffRequest"
+  },
+  "payload": {
+    "switchControlAction": "TURN_ON",
+    "appliance": {
+      "additionalApplianceDetails": {
+        "key2": "value2",
+        "key1": "value1"
+      },
+      "applianceId": "sampleId"
+    },
+    "accessToken": "sampleAccessToken"
+  }
+}
+```
+
+</details>
+
+<details><summary>Code Commit</summary>
+
+```json
+{
+  "Records": [
+    {
+      "awsRegion": "us-east-2",
+      "codecommit": {
+        "references": [
+          {
+            "commit": "5e493c6f3067653f3d04eca608b4901eb227078",
+            "ref": "refs/heads/master"
+          }
+        ]
+      },
+      "eventId": "31ade2c7-f889-47c5-a937-1cf99e2790e9",
+      "eventName": "ReferenceChanges",
+      "eventPartNumber": 1,
+      "eventSource": "aws:codecommit",
+      "eventSourceARN": "arn:aws:codecommit:us-east-2:123456789012:lambda-pipeline-repo",
+      "eventTime": "2019-03-12T20:58:25.400+0000",
+      "eventTotalParts": 1,
+      "eventTriggerConfigId": "0d17d6a4-efeb-46f3-b3ab-a63741badeb8",
+      "eventTriggerName": "index.handler",
+      "eventVersion": "1.0",
+      "userIdentityARN": "arn:aws:iam::123456789012:user/intern"
+    }
+  ]
+}
+```
+
+</details>
+
+<details><summary>EC2 Instance LifeCycle</summary>
+
+```json
+{
+  "version": "0",
+  "id": "b6ba298a-7732-2226-xmpl-976312c1a050",
+  "detail-type": "EC2 Instance State-change Notification",
+  "source": "aws.ec2",
+  "account": "123456798012",
+  "time": "2019-10-02T17:59:30Z",
+  "region": "us-east-2",
+  "resources": [
+    "arn:aws:ec2:us-east-2:123456798012:instance/i-0c314xmplcd5b8173"
+  ],
+  "detail": {
+    "instance-id": "i-0c314xmplcd5b8173",
+    "state": "running"
+  }
+}
+```
+
+</details>
